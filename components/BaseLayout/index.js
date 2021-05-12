@@ -1,15 +1,17 @@
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/client';
 import { useState } from 'react';
 import classNames from 'classnames';
 
 const Navigation = () => {
   const [isNavOpen, setNavOpen] = useState(false);
+  const [session, loading] = useSession();
 
   return (
     <section className="container mx-auto">
       <nav className="relative px-6 py-6 flex justify-between items-center bg-white">
         <a className="text-3xl font-bold leading-none" href="/">
-          FindPartner
+          MakersMatch
         </a>
         <div className="lg:hidden">
           <button
@@ -17,7 +19,7 @@ const Navigation = () => {
             className="navbar-burger flex items-center text-green-600 p-3">
             <svg
               className="block h-4 w-4 fill-current"
-              viewbox="0 0 20 20"
+              viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg">
               <title>Mobile menu</title>
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
@@ -31,25 +33,34 @@ const Navigation = () => {
             </a>
           </li>
         </ul>
-        <Link href="/login">
-          <a className="hidden lg:inline-block py-2 px-6 bg-green-500 hover:bg-green-600 text-sm text-white font-bold rounded-l-xl rounded-t-xl transition duration-200">
-            Sign in
-          </a>
-        </Link>
+        {!session && !loading && (
+          <Link href="/login">
+            <a className="hidden lg:inline-block py-2 px-6 bg-green-500 hover:bg-green-600 text-sm text-white font-bold rounded-l-xl rounded-t-xl transition duration-200">
+              Sign in
+            </a>
+          </Link>
+        )}
+        {session && !loading && (
+          <Link href="/">
+            <a className="hidden lg:inline-block py-2 px-6 bg-green-500 hover:bg-green-600 text-sm text-white font-bold rounded-l-xl rounded-t-xl transition duration-200">
+              {session.user.email}
+            </a>
+          </Link>
+        )}
       </nav>
       <div className={classNames(['navbar-menu', 'relative', 'z-50'], { hidden: !isNavOpen })}>
         <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
         <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
           <div className="flex items-center mb-8">
             <a className="mr-auto text-3xl font-bold leading-none" href="/">
-              FindPartner
+              MakersMatch
             </a>
             <button onClick={() => setNavOpen(false)} className="navbar-close">
               <svg
                 className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewbox="0 0 24 24"
+                viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path
                   strokeLinecap="round"
@@ -72,16 +83,24 @@ const Navigation = () => {
           </div>
           <div className="mt-auto">
             <div className="pt-6">
-              <Link href="/login">
-                <a
-                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-l-xl rounded-t-xl">
-                  Sign In
-                </a>
-              </Link>
-
+              {!session && !loading && (
+                <Link href="/login">
+                  <a
+                    className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-l-xl rounded-t-xl">
+                    Sign In
+                  </a>
+                </Link>
+              )}
+              {session && !loading && (
+                <button
+                  onClick={signOut}
+                  className="w-full block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-gray-500 hover:bg-green-700 rounded-l-xl rounded-t-xl">
+                  Logout
+                </button>
+              )}
             </div>
             <p className="my-4 text-xs text-center text-gray-400">
-              <span>&copy; {(new Date).getFullYear()+1} All rights reserved.</span>
+              <span>&copy; 2020 All rights reserved.</span>
             </p>
           </div>
         </nav>
@@ -96,39 +115,39 @@ const Footer = () => {
       <div className="skew skew-top mr-for-radius">
         <svg
           className="h-8 md:h-12 lg:h-20 w-full text-gray-50"
-          viewbox="0 0 10 10"
-          preserveaspectratio="none">
+          viewBox="0 0 10 10"
+          preserveAspectRatio="none">
           <polygon fill="currentColor" points="0 0 10 10 0 10"></polygon>
         </svg>
       </div>
       <div className="skew skew-top ml-for-radius">
         <svg
           className="h-8 md:h-12 lg:h-20 w-full text-gray-50"
-          viewbox="0 0 10 10"
-          preserveaspectratio="none">
+          viewBox="0 0 10 10"
+          preserveAspectRatio="none">
           <polygon fill="currentColor" points="0 10 10 0 10 10"></polygon>
         </svg>
       </div>
       <div className="py-20 radius-for-skewed">
         <div className="max-w-md mx-auto text-center">
           <p className="mb-6 text-sm font-semibold text-gray-400">
-            &copy; {(new Date).getFullYear()} All rights reserved.
+            &copy; 2021. All rights reserved.
           </p>
         </div>
       </div>
       <div className="skew skew-bottom mr-for-radius">
         <svg
           className="h-8 md:h-12 lg:h-20 w-full text-gray-50"
-          viewbox="0 0 10 10"
-          preserveaspectratio="none">
+          viewBox="0 0 10 10"
+          preserveAspectRatio="none">
           <polygon fill="currentColor" points="0 0 10 0 0 10"></polygon>
         </svg>
       </div>
       <div className="skew skew-bottom ml-for-radius">
         <svg
           className="h-8 md:h-12 lg:h-20 w-full text-gray-50"
-          viewbox="0 0 10 10"
-          preserveaspectratio="none">
+          viewBox="0 0 10 10"
+          preserveAspectRatio="none">
           <polygon fill="currentColor" points="0 0 10 0 10 10"></polygon>
         </svg>
       </div>
