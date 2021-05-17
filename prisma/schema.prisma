@@ -46,6 +46,7 @@ model User {
   image           String?
   skill           String?
   timezone        String?
+  biogram         String?
   createdAt       DateTime       @default(now()) @map("created_at")
   updatedAt       DateTime       @default(now()) @map("updated_at")
   profilesChecked ProfileCheck[] @relation("ProfilesChecked")
@@ -63,7 +64,7 @@ model Filter {
   timezone String?
 
   user      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    Int      @unique
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
 
@@ -128,4 +129,22 @@ model VerificationRequest {
   updatedAt  DateTime @default(now()) @map("updated_at")
 
   @@map("verification_requests")
+}
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  @@map("skills")
+}
+
+model Timezone {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  @@map("timezones")
 }
