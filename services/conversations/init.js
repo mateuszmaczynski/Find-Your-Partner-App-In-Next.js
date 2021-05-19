@@ -1,4 +1,4 @@
-import { conversation } from 'models';
+import { conversation } from "models";
 
 export const initConversation = (userIds) =>
   conversation.create({
@@ -7,10 +7,10 @@ export const initConversation = (userIds) =>
         create: userIds.map((id) => ({
           user: {
             connect: {
-              id
-            }
-          }
-        }))
-      }
-    }
+              id,
+            },
+          },
+        })),
+      },
+    },
   });

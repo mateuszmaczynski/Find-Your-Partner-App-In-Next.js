@@ -1,14 +1,14 @@
-import onlyAuth from 'middlewares/onlyAuth';
-import { upsertFilter } from 'services/filters/upsert';
+import onlyAuth from "middlewares/onlyAuth";
+import { upsertFilter } from "services/filters/upsert";
 
 const userFilterApi = async (req, res) => {
   switch (req.method) {
-    case 'PUT': {
+    case "PUT": {
       try {
         const payload = req.body;
         const filter = await upsertFilter({
           userId: req.currentUser.id,
-          payload
+          payload,
         });
 
         res.status(200).json({ filter });

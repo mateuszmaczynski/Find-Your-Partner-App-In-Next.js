@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/client';
-import { useState } from 'react';
-import classNames from 'classnames';
+import Link from "next/link";
+import { useSession, signOut } from "next-auth/client";
+import { useState } from "react";
+import classNames from "classnames";
 
 const Navigation = () => {
   const [isNavOpen, setNavOpen] = useState(false);
@@ -16,11 +16,13 @@ const Navigation = () => {
         <div className="lg:hidden">
           <button
             onClick={() => setNavOpen(true)}
-            className="navbar-burger flex items-center text-green-600 p-3">
+            className="navbar-burger flex items-center text-green-600 p-3"
+          >
             <svg
               className="block h-4 w-4 fill-current"
               viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <title>Mobile menu</title>
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
             </svg>
@@ -48,7 +50,11 @@ const Navigation = () => {
           </Link>
         )}
       </nav>
-      <div className={classNames(['navbar-menu', 'relative', 'z-50'], { hidden: !isNavOpen })}>
+      <div
+        className={classNames(["navbar-menu", "relative", "z-50"], {
+          hidden: !isNavOpen,
+        })}
+      >
         <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
         <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
           <div className="flex items-center mb-8">
@@ -61,12 +67,14 @@ const Navigation = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor">
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"></path>
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
               </svg>
             </button>
           </div>
@@ -75,7 +83,8 @@ const Navigation = () => {
               <li className="mb-1">
                 <a
                   className="block p-4 text-sm font-semibold text-gray-400 hover:bg-green-50 hover:text-green-600 rounded"
-                  href="/">
+                  href="/"
+                >
                   Start
                 </a>
               </li>
@@ -85,8 +94,7 @@ const Navigation = () => {
             <div className="pt-6">
               {!session && !loading && (
                 <Link href="/login">
-                  <a
-                    className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-l-xl rounded-t-xl">
+                  <a className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-green-600 hover:bg-green-700 rounded-l-xl rounded-t-xl">
                     Sign In
                   </a>
                 </Link>
@@ -94,7 +102,8 @@ const Navigation = () => {
               {session && !loading && (
                 <button
                   onClick={signOut}
-                  className="w-full block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-gray-500 hover:bg-green-700 rounded-l-xl rounded-t-xl">
+                  className="w-full block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-gray-500 hover:bg-green-700 rounded-l-xl rounded-t-xl"
+                >
                   Logout
                 </button>
               )}
@@ -116,7 +125,8 @@ const Footer = () => {
         <svg
           className="h-8 md:h-12 lg:h-20 w-full text-gray-50"
           viewBox="0 0 10 10"
-          preserveAspectRatio="none">
+          preserveAspectRatio="none"
+        >
           <polygon fill="currentColor" points="0 0 10 10 0 10"></polygon>
         </svg>
       </div>
@@ -124,7 +134,8 @@ const Footer = () => {
         <svg
           className="h-8 md:h-12 lg:h-20 w-full text-gray-50"
           viewBox="0 0 10 10"
-          preserveAspectRatio="none">
+          preserveAspectRatio="none"
+        >
           <polygon fill="currentColor" points="0 10 10 0 10 10"></polygon>
         </svg>
       </div>
@@ -139,7 +150,8 @@ const Footer = () => {
         <svg
           className="h-8 md:h-12 lg:h-20 w-full text-gray-50"
           viewBox="0 0 10 10"
-          preserveAspectRatio="none">
+          preserveAspectRatio="none"
+        >
           <polygon fill="currentColor" points="0 0 10 0 0 10"></polygon>
         </svg>
       </div>
@@ -147,7 +159,8 @@ const Footer = () => {
         <svg
           className="h-8 md:h-12 lg:h-20 w-full text-gray-50"
           viewBox="0 0 10 10"
-          preserveAspectRatio="none">
+          preserveAspectRatio="none"
+        >
           <polygon fill="currentColor" points="0 0 10 0 10 10"></polygon>
         </svg>
       </div>

@@ -1,13 +1,13 @@
-import { profileCheck, user } from 'models';
-import { initConversation } from 'services/conversations/init';
+import { profileCheck, user } from "models";
+import { initConversation } from "services/conversations/init";
 
 const checkIfMatchExists = async (userId, targetUserId) => {
   const count = await profileCheck.count({
     where: {
       liked: true,
       userId: targetUserId,
-      targetId: userId
-    }
+      targetId: userId,
+    },
   });
 
   return count > 0;
@@ -18,8 +18,8 @@ const alreadyLiked = async (userId, targetUserId) => {
     where: {
       liked: true,
       userId: userId,
-      targetId: targetUserId
-    }
+      targetId: targetUserId,
+    },
   });
 
   return count > 0;
@@ -27,23 +27,23 @@ const alreadyLiked = async (userId, targetUserId) => {
 
 export const likeProfile = async ({ userId, targetUserId }) => {
   if (await alreadyLiked(userId, targetUserId)) {
-    throw new Error('profile_already_liked');
+    throw new Error("profile_already_liked");
   }
 
   await profileCheck.create({
     data: {
       user: {
         connect: {
-          id: userId
-        }
+          id: userId,
+        },
       },
       targetUser: {
         connect: {
-          id: targetUserId
-        }
+          id: targetUserId,
+        },
       },
-      liked: true
-    }
+      liked: true,
+    },
   });
 
   const hasMatch = await checkIfMatchExists(userId, targetUserId);
@@ -53,8 +53,8 @@ export const likeProfile = async ({ userId, targetUserId }) => {
 
   const targetUser = await user.findUnique({
     where: {
-      id: targetUserId
-    }
+      id: targetUserId,
+    },
   });
 
   return { hasMatch, targetUser };

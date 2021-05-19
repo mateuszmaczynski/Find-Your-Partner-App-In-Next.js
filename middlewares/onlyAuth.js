@@ -1,5 +1,5 @@
-import { getSession } from 'next-auth/client';
-import { user } from 'models';
+import { getSession } from "next-auth/client";
+import { user } from "models";
 
 const onlyAuth = (handler) => {
   return async (req, res) => {
@@ -8,14 +8,14 @@ const onlyAuth = (handler) => {
     if (!session) {
       return res.status(401).json({
         success: false,
-        message: 'Please log in to get access.'
+        message: "Please log in to get access.",
       });
     }
 
     req.currentUser = await user.findUnique({
       where: {
-        email: session.user.email
-      }
+        email: session.user.email,
+      },
     });
 
     return handler(req, res);
