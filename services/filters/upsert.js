@@ -1,22 +1,22 @@
-import { filter } from "models";
+import { filter } from 'models';
 
 export const upsertFilter = ({ userId, payload }) =>
   filter.upsert({
     where: {
-      userId,
+      userId
     },
     update: {
       skill: payload.skill,
       timezone: payload.timezone,
-      updatedAt: new Date(),
+      updatedAt: new Date()
     },
     create: {
       skill: payload.skill,
       timezone: payload.timezone,
       user: {
         connect: {
-          id: userId,
-        },
-      },
-    },
+          id: userId
+        }
+      }
+    }
   });

@@ -1,41 +1,8 @@
-import { user } from "models";
+import onlyAuth from 'middlewares/onlyAuth';
 
-export default async (req, res) => {
-
-  // const allUsers = await user.findMany({
-  //   select: {
-  //     id: true,
-  //     createdAt: true,
-  //     name: true,
-  //     email: true
-  //   },
-  // });
-
-  await user.create({
-    data: {
-      email: 'jannowak@wp.pl',
-      name: 'Jan Nowak',
-      image: 'test.jpg'
-    }
-  });
-
-  // await user.update({
-  //   where: {
-  //     id: 2
-  //   },
-  //   data: {
-  //     name: 'Piotr'
-  //   }
-  // });
-
-  // await user.delete({
-  //   where: {
-  //     id: 2
-  //   }
-  // });
-
-  const allUsers = await user.findMany();
-
+const helloApi = async (req, res) => {
   res.statusCode = 200;
-  res.json(allUsers);
+  res.json({ user: req.currentUser });
 };
+
+export default onlyAuth(helloApi);
