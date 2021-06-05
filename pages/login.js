@@ -1,8 +1,7 @@
-import { signIn } from "next-auth/client";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/client";
-import { useEffect, useState } from "react";
+import { signIn, useSession } from 'next-auth/client';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function Login() {
   const [signing, setSigning] = useState(false);
@@ -12,12 +11,12 @@ export default function Login() {
   const handleGithubLogin = async (e) => {
     e.preventDefault();
     setSigning(true);
-    await signIn("github");
+    await signIn('github');
   };
 
   useEffect(() => {
     if (session && !loading) {
-      router.push("/");
+      router.push('/');
     }
   }, [session, loading]);
 
@@ -28,9 +27,7 @@ export default function Login() {
           <div className="max-w-xl mx-auto">
             <div className="mb-10 text-center ">
               <Link href="/">
-                <a className="text-white text-3xl font-bold leading-none">
-                  FindPartner
-                </a>
+                <a className="text-white text-3xl font-bold leading-none">FindPartner</a>
               </Link>
             </div>
             <div className="p-6 lg:p-12 bg-white shadow-md rounded">
@@ -42,12 +39,11 @@ export default function Login() {
                 <div className="text-center">
                   <button
                     className="mt-8 mb-4 p-4 w-full flex justify-center items-center border rounded hover:bg-gray-50"
-                    onClick={handleGithubLogin}
-                  >
+                    onClick={handleGithubLogin}>
                     <img className="mr-4 w-6" src="/github.svg" alt="" />
                     <span className="text-xs text-gray-500 font-bold">
-                      {!signing && "Sign in with your GitHub"}
-                      {signing && "Signing in..."}
+                      {!signing && 'Sign in with your GitHub'}
+                      {signing && 'Signing in...'}
                     </span>
                   </button>
                 </div>

@@ -1,12 +1,12 @@
-import { profileCheck, user } from "models";
+import { profileCheck, user } from 'models';
 
 const alreadySkipped = async (userId, targetUserId) => {
   const count = await profileCheck.count({
     where: {
       liked: false,
       userId: userId,
-      targetId: targetUserId,
-    },
+      targetId: targetUserId
+    }
   });
 
   return count > 0;
@@ -14,29 +14,29 @@ const alreadySkipped = async (userId, targetUserId) => {
 
 export const skipProfile = async ({ userId, targetUserId }) => {
   if (await alreadySkipped(userId, targetUserId)) {
-    throw new Error("profile_already_skipped");
+    throw new Error('profile_already_skipped');
   }
 
   await profileCheck.create({
     data: {
       user: {
         connect: {
-          id: userId,
-        },
+          id: userId
+        }
       },
       targetUser: {
         connect: {
-          id: targetUserId,
-        },
+          id: targetUserId
+        }
       },
-      liked: false,
-    },
+      liked: false
+    }
   });
 
   const targetUser = await user.findUnique({
     where: {
-      id: targetUserId,
-    },
+      id: targetUserId
+    }
   });
 
   return { targetUser };

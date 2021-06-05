@@ -1,13 +1,13 @@
-import { user } from "models";
+import { user } from 'models';
 
 export const updateProfile = async ({ userId, payload }) =>
   user.update({
     where: {
-      id: userId,
+      id: userId
     },
     data: {
       skill: payload.skill,
       timezone: payload.timezone,
-      updatedAt: new Date(),
-    },
+      updatedAt: new Date()
+    }
   });

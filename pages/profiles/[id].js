@@ -128,10 +128,14 @@ export default function ProfilePage({ profile, skills, timezones }) {
                 <div className="w-full lg:w-2/3">
                   <div className="max-w-lg mx-auto">
                     <p className="mb-8 text-2xl text-gray-500">
-                      What I created?<br />
-                      🧑🏼‍💻 Daily To-do App<br />
-                      🔗 RemoteAwesome.com<br />
-                      📺  Design&Code channel<br />
+                      What I created?
+                      <br />
+                      🧑🏼‍💻 Daily To-do App
+                      <br />
+                      🔗 RemoteAwesome.com
+                      <br />
+                      📺 Design&Code channel
+                      <br />
                     </p>
                     <div className="flex items-center justify-between">
                       <div>
