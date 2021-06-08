@@ -38,6 +38,11 @@ const Navigation = () => {
               <a className="text-sm text-gray-400 hover:text-gray-500">Browse</a>
             </Link>
           </li>
+          <li>
+            <Link href="/connections">
+              <a className="text-sm text-gray-400 hover:text-gray-500">Connections</a>
+            </Link>
+          </li>
         </ul>
         {!session && !loading && (
           <Link href="/login">
