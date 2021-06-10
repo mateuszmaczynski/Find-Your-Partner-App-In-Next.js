@@ -1,7 +1,10 @@
 import { conversation } from 'models';
+import { markAsRead } from './markAsRead';
 
-export const get = ({ id, userId }) =>
-  conversation.findFirst({
+export const get = async ({ id, userId }) => {
+  await markAsRead({ conversationId: id, userId });
+
+  return conversation.findFirst({
     where: {
       id,
       users: {
@@ -23,3 +26,4 @@ export const get = ({ id, userId }) =>
       }
     }
   });
+};

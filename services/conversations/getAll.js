@@ -20,5 +20,8 @@ export const getAll = ({ userId }) =>
           user: true
         }
       }
+    },
+    orderBy: {
+      id: 'desc'
     }
   });
