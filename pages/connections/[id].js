@@ -6,6 +6,7 @@ import apiRoutes from 'utils/apiRoutes';
 import { user } from 'models';
 import { getSession } from 'next-auth/client';
 import useSWR, { mutate } from 'swr';
+import Head from 'next/head';
 
 export const getServerSideProps = async ({ req, params }) => {
   const session = await getSession({ req });
@@ -74,6 +75,9 @@ export default function Connections({ initConversation, currentUser }) {
 
   return (
     <BaseLayout>
+      <Head>
+        <title>Conversation</title>
+      </Head>
       <div className="w-full px-5 flex flex-col justify-between bg-gree">
         <div className="flex flex-col mt-5">
           {conversation.messages.map((message) => {

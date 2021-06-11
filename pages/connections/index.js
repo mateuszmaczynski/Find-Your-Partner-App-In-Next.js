@@ -3,6 +3,7 @@ import { getAll } from 'services/conversations/getAll';
 import { user } from 'models';
 import { getSession } from 'next-auth/client';
 import Link from 'next/link';
+import Head from 'next/head';
 
 export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
@@ -28,11 +29,14 @@ export const getServerSideProps = async ({ req }) => {
 export default function Connections({ conversations }) {
   return (
     <BaseLayout>
+      <Head>
+        <title>Your connections</title>
+      </Head>
       <div className="border-t-2">
         {conversations.map((item) => {
           return (
             <Link key={`conversation-${item.id}`} href={`/connections/${item.id}`}>
-              <div className="flex flex-row py-4 px-2 justify-center items-center border-b-2">
+              <div className="cursor-pointer flex flex-row py-4 px-2 justify-center items-center border-b-2">
                 <div className="w-1/4">
                   {item.users.map(({ user }) => (
                     <img
@@ -44,11 +48,14 @@ export default function Connections({ conversations }) {
                   ))}
                 </div>
                 <div className="w-full">
+                  {item.messages.length === 0 && (
+                    <div className="text-center">No messages yet. You can start conversation!</div>
+                  )}
                   <div className="text-lg font-semibold">
-                    {item.messages[item.messages.length - 1].user.name}
+                    {item.messages[item.messages.length - 1]?.user?.name}
                   </div>
                   <span className="text-gray-500">
-                    {item.messages[item.messages.length - 1].content}
+                    {item.messages[item.messages.length - 1]?.content}
                   </span>
                 </div>
               </div>
