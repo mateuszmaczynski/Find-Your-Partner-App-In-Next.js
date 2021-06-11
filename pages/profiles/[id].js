@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import apiRoutes from 'utils/apiRoutes';
 import getAllSkills from 'services/skills/getAll';
 import getAllTimezones from 'services/timezones/getAll';
+import MatchModal from 'components/MatchModal';
 
 export const getStaticPaths = async () => {
   const profiles = await user.findMany();
@@ -49,6 +50,8 @@ export default function ProfilePage({ profile, skills, timezones }) {
   const [session, loading] = useSession();
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [nextId, setNextId] = useState();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -73,10 +76,15 @@ export default function ProfilePage({ profile, skills, timezones }) {
 
   const handleLike = async () => {
     const {
-      data: { nextProfile }
+      data: { nextProfile, hasMatch }
     } = await apiRoutes.profiles.like({ targetUserId: profile.id });
 
-    redirectNextStep(nextProfile);
+    if (hasMatch) {
+      setNextId(nextProfile.id);
+      setIsOpen(true);
+    } else {
+      redirectNextStep(nextProfile);
+    }
   };
 
   const redirectNextStep = (nextProfile) => {
@@ -94,6 +102,13 @@ export default function ProfilePage({ profile, skills, timezones }) {
           {profile.name} ({profile.skill})
         </title>
       </Head>
+      <MatchModal
+        isOpen={isOpen}
+        handleClose={() => {
+          setIsOpen(false);
+          redirectNextStep({ id: nextId });
+        }}
+      />
       <UserFilters skills={skills} timezones={timezones} currentUser={currentUser} />
       <section>
         <div className="skew skew-top mr-for-radius">
