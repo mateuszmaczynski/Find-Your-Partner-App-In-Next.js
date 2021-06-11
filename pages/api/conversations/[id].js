@@ -4,12 +4,13 @@ import { get } from 'services/conversations/get';
 
 const conversationApi = async (req, res) => {
   const conversationId = Number(req.query.id);
+  const userId = req.currentUser.id;
   switch (req.method) {
     case 'POST': {
       try {
         const conversation = await create({
           ...req.body,
-          userId: req.currentUser.id,
+          userId,
           conversationId: Number(req.query.id)
         });
 
@@ -22,7 +23,7 @@ const conversationApi = async (req, res) => {
 
     case 'GET': {
       try {
-        const conversation = await get({ id: conversationId, userId: req.currentUser.id });
+        const conversation = await get({ id: conversationId, userId });
         if (!conversation) {
           throw Error('conversation_not_found');
         }
