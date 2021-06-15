@@ -2,10 +2,29 @@ import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/client';
 import { useState } from 'react';
 import classNames from 'classnames';
+import useSWR from 'swr';
+import apiRoutes from 'utils/apiRoutes';
+
+const ConnectionsLink = ({ isLoggedIn = false, className }) => {
+  const { data, loading } = useSWR(isLoggedIn ? `/api/conversations` : null, apiRoutes.fetcher);
+
+  return (
+    <Link href="/connections">
+      <a className={className}>
+        Connections
+        {!loading && data?.unread > 0 && ` (${data.unread})`}
+      </a>
+    </Link>
+  );
+};
 
 const Navigation = () => {
   const [isNavOpen, setNavOpen] = useState(false);
   const [session, loading] = useSession();
+
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: '/' });
+  };
 
   return (
     <section className="container mx-auto">
@@ -39,10 +58,29 @@ const Navigation = () => {
             </Link>
           </li>
           <li>
-            <Link href="/connections">
-              <a className="text-sm text-gray-400 hover:text-gray-500">Connections</a>
-            </Link>
+            <ConnectionsLink
+              isLoggedIn={session && !loading}
+              className="text-sm text-gray-400 hover:text-gray-500"
+            />
           </li>
+          {session && !loading && (
+            <li>
+              <Link href="/my-profile">
+                <a className="text-sm text-gray-400 hover:text-gray-500">My profile</a>
+              </Link>
+            </li>
+          )}
+          {session && !loading && (
+            <li>
+              <button
+                onClick={() => {
+                  signOut({ callbackUrl: '/' });
+                }}
+                className="text-sm text-gray-400 hover:text-gray-500">
+                Logout
+              </button>
+            </li>
+          )}
         </ul>
         {!session && !loading && (
           <Link href="/login">
@@ -64,7 +102,7 @@ const Navigation = () => {
         <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
           <div className="flex items-center mb-8">
             <a className="mr-auto text-3xl font-bold leading-none" href="/">
-              MakersMatch
+              FindPartner
             </a>
             <button onClick={() => setNavOpen(false)} className="navbar-close">
               <svg
@@ -84,11 +122,42 @@ const Navigation = () => {
           <div>
             <ul>
               <li className="mb-1">
-                <a
+                <Link href="/">
+                  <a className="block p-4 text-sm font-semibold text-gray-400 hover:bg-green-50 hover:text-green-600 rounded">
+                    Start
+                  </a>
+                </Link>
+              </li>
+              <li className="mb-1">
+                <Link href="/profiles/browse">
+                  <a className="block p-4 text-sm font-semibold text-gray-400 hover:bg-green-50 hover:text-green-600 rounded">Browse</a>
+                </Link>
+              </li>
+              <li className="mb-1">
+                <ConnectionsLink
+                  isLoggedIn={session && !loading}
                   className="block p-4 text-sm font-semibold text-gray-400 hover:bg-green-50 hover:text-green-600 rounded"
-                  href="/">
-                  Start
-                </a>
+                />
+              </li>
+              <li className="mb-1">
+                <Link href="/profiles/browse">
+                  <a className="block p-4 text-sm font-semibold text-gray-400 hover:bg-green-50 hover:text-green-600 rounded">
+                    Browse
+                  </a>
+                </Link>
+              </li>
+              <li className="mb-1">
+                <ConnectionsLink
+                  isLoggedIn={session && !loading}
+                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-green-50 hover:text-green-600 rounded"
+                />
+              </li>
+              <li className="mb-1">
+                <Link href="/my-profile">
+                  <a className="block p-4 text-sm font-semibold text-gray-400 hover:bg-green-50 hover:text-green-600 rounded">
+                    My profile
+                  </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -103,7 +172,9 @@ const Navigation = () => {
               )}
               {session && !loading && (
                 <button
-                  onClick={signOut}
+                  onClick={() => {
+                    signOut({ callbackUrl: '/' });
+                  }}
                   className="w-full block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-gray-500 hover:bg-green-700 rounded-l-xl rounded-t-xl">
                   Logout
                 </button>
