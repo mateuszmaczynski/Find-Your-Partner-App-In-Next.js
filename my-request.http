@@ -1,3 +1,55 @@
 ###
 http://localhost:3000/api/hello
 Cookie: {{sessionToken}}
+
+###
+PUT http://localhost:3000/api/user/filter
+Cookie: {{sessionToken}}
+Content-Type: application/json
+
+{
+  "skill": "Tester",
+  "timezone": "GMT-1:00"
+}
+
+###
+PUT http://localhost:3000/api/user/profile
+Cookie: {{sessionToken}}
+Content-Type: application/json
+
+{
+  "skill": "Fullstack Developer",
+  "timezone": "GMT+1:00"
+}
+
+###
+GET http://localhost:3000/api/profiles
+Cookie: {{sessionToken}}
+
+###
+POST http://localhost:3000/api/profiles
+Content-Type: application/json
+Cookie: {{sessionToken}}
+
+{
+  "targetUserId": 1
+}
+
+###
+DELETE  http://localhost:3000/api/profiles
+Content-Type: application/json
+Cookie: {{sessionToken}}
+
+{
+  "targetUserId": 1
+}
+
+###
+GET http://localhost:3000/api/conversations
+Content-Type: application/json
+Cookie: {{sessionToken}}
+
+###
+GET http://localhost:3000/api/conversations/72
+Content-Type: application/json
+Cookie: {{sessionToken}}
