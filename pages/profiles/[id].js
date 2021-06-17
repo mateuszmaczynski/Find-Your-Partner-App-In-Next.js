@@ -80,7 +80,7 @@ export default function ProfilePage({ profile, skills, timezones }) {
     } = await apiRoutes.profiles.like({ targetUserId: profile.id });
 
     if (hasMatch) {
-      setNextId(nextProfile.id);
+      setNextId(nextProfile?.id);
       setIsOpen(true);
     } else {
       redirectNextStep(nextProfile);
