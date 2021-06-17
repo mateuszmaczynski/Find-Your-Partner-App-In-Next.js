@@ -11,7 +11,6 @@ const conversationApi = async (req, res) => {
 
         res.status(200).json({ conversations, unread });
       } catch (error) {
-        console.log(`error`, error);
         res.status(422).json({ conversations: [], unread: 0, error });
       }
       break;
