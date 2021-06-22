@@ -1,8 +1,12 @@
 import BaseLayout from 'components/BaseLayout';
+import Head from 'next/head';
 
 export default function Home() {
   return (
     <BaseLayout>
+      <Head>
+        <title>FindPartner</title>
+      </Head>
       <section>
         <div className="skew skew-top mr-for-radius">
           <svg
