@@ -1,4 +1,4 @@
-import client from './client';
+import { prisma } from './client';
 
 export const {
   conversation,
@@ -9,4 +9,4 @@ export const {
   profileCheck,
   skill,
   timezone
-} = client;
+} = prisma;
